@@ -69,7 +69,7 @@ and needs to be told what this class is.
 // Database.m
 
 @implementation Database
-SHARED_INSTANCE_CGD_WITH_NAME("Database")
+SHARED_INSTANCE_CGD_WITH_NAME(Database)
 @end
 ```
 
@@ -84,7 +84,7 @@ SHARED_INSTANCE_CGD_WITH_NAME("Database")
 // Database.m
 
 @implementation Database
-SHARED_INSTANCE_GCD_WITH_NAME_USING_BLOCK("Database", ^{
+SHARED_INSTANCE_GCD_WITH_NAME_USING_BLOCK(Database, ^{
   return [[Database alloc] initWithAnotherInitializer];
 })
 @end

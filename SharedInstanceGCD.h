@@ -42,7 +42,7 @@
 #define SHARED_INSTANCE_GCD_WITH_NAME(classname)                        \
 \
 + (instancetype)shared##classname { \
-    SHARED_INSTANCE_GCD_WITH_NAME_USING_BLOCK(^{ \
+    DEFINE_SHARED_INSTANCE_GCD_USING_BLOCK(^{ \
       return [[self alloc] init]; \
     }) \
 }                                                           
