@@ -11,13 +11,17 @@ three main types into one header file, easily included by CocoaPods.
 
 There are 3 main ways to create singletons using these macros.
 
-### `sharedInstance`
+### Use sharedInstance
 
 This is the best one, in my opinion. It follows a prevailing naming
-convention in recent Cocoa modules, and needs no parameters. It relies
-on the convention that the [designated initializer] for your class is
-simply `init`.
+convention in recent Cocoa modules, and needs no parameters.
 
+The first example relies on the convention that the
+[designated initializer](https://developer.apple.com/library/ios/documentation/general/conceptual/CocoaEncyclopedia/Initialization/Initialization.html)
+for your class is simply `init`. The second uses a block to allow you
+to call any initializer.
+
+**sharedInstance, default initializer**
 ```ObjC
 // MyClass.h
 
@@ -32,33 +36,7 @@ SHARED_INSTANCE_CGD
 @end
 ```
 
-
-### `sharedClassname`
-
-This one follows a longer-standing naming convention in Cocoa modules,
-and needs to be told what this class is.
-
-```ObjC
-// Database.h
-
-@interface Database
-+ (instancetype)sharedDatabase;
-@end
-
-// Database.m
-
-@implementation Database
-SHARED_INSTANCE_CGD_WITH_NAME("Database")
-@end
-```
-
-
-### Initialize Using a Block
-
-This one gives you the most flexibility: you can use either of the
-naming conventions above, or the method-body variant.
-
-**sharedInstance naming convention**
+**sharedInstance, custom initializer**
 ```ObjC
 // MyClass.h
 
@@ -75,7 +53,27 @@ SHARED_INSTANCE_GCD_USING_BLOCK(^{
 @end
 ```
 
-**sharedClassname naming convention**
+### Use sharedClassname
+
+This one follows a longer-standing naming convention in Cocoa modules,
+and needs to be told what this class is.
+
+**sharedClassname, default initializer**
+```ObjC
+// Database.h
+
+@interface Database
++ (instancetype)sharedDatabase;
+@end
+
+// Database.m
+
+@implementation Database
+SHARED_INSTANCE_CGD_WITH_NAME("Database")
+@end
+```
+
+**sharedClassname, custom initializer**
 ```ObjC
 // Database.h
 
@@ -91,6 +89,12 @@ SHARED_INSTANCE_GCD_WITH_NAME_USING_BLOCK("Database", ^{
 })
 @end
 ```
+
+### Method Body
+
+This one gives you the most flexibility: you can use any method name.
+Unlike the other options, you have to define the method in your
+implementation file.
 
 **Method body only approach**
 ```ObjC
@@ -110,6 +114,7 @@ SHARED_INSTANCE_GCD_WITH_NAME_USING_BLOCK("Database", ^{
         return [[Utility alloc] initWithAnotherInitializer];
     })
 }
+
 @end
 ```
 
